@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Hackathon": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\CFBDev\\Hackathon\\a_example.txt"
+    }
+  }
+}
