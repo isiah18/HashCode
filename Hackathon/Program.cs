@@ -28,7 +28,7 @@ namespace Hackathon
                 file.WriteLine(orders);
             }
 
-            Console.WriteLine("Points : " + globalPoints);            
+            Console.WriteLine("Points : " + globalPoints);
         }
 
         private static void Initialize(string fileLocation)
@@ -58,10 +58,6 @@ namespace Hackathon
             }
 
             pizzas = pizzas.OrderBy(s => s.TotalToppings).ToList();
-
-
-            //TODO : check if total people > total pizzas 
-            //pizzas = pizzas.TakeLast(recievers[2] + recievers[3] + recievers[4]).ToList();
 
         }
 
@@ -105,6 +101,7 @@ namespace Hackathon
             }
         }
 
+
         public static void CreateOrder(int totalPizzas)
         {
             var order = new StringBuilder();
@@ -112,11 +109,11 @@ namespace Hackathon
             {
                 case 2:
                     order.Append("2 ");
-                   
-                    var toppings2 = new HashSet<string>(pizzas[0].Toppings);
+
+                    var toppings2 = new HashSet<string>(pizzas[pizzas.Count - 1].Toppings);
                     //delete pizza
-                    order.Append($"{pizzas[0].Index} ");
-                    pizzas.RemoveAt(0);
+                    order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+                    pizzas.RemoveAt(pizzas.Count - 1);
 
                     toppings2.UnionWith(pizzas[pizzas.Count - 1].Toppings);
                     //delete pizza
@@ -129,60 +126,145 @@ namespace Hackathon
 
                 case 3:
                     order.Append("3 ");
-                    
-                    var toppings3 = new HashSet<string>(pizzas[0].Toppings);
+
+                    var toppings3 = new HashSet<string>(pizzas[pizzas.Count - 1].Toppings);
                     //delete pizza
-                    order.Append($"{pizzas[0].Index} ");
-                    pizzas.RemoveAt(0);
+                    order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+                    pizzas.RemoveAt(pizzas.Count - 1);
 
                     toppings3.UnionWith(pizzas[pizzas.Count - 1].Toppings);
                     order.Append($"{pizzas[pizzas.Count - 1].Index} ");
                     pizzas.RemoveAt(pizzas.Count - 1);
 
-                    var middlePointer = (int)Math.Floor(pizzas.Count / 2.0);
-                    toppings3.UnionWith(pizzas[middlePointer].Toppings);
-                    //delete pizza
-                    order.Append($"{pizzas[middlePointer].Index}");
-                    pizzas.RemoveAt(middlePointer);
+                    toppings3.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+                    order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+                    pizzas.RemoveAt(pizzas.Count - 1);
+
 
                     recievers[3] -= 3;
                     globalPoints += Math.Pow(toppings3.Count(), 2);
                     break;
                 case 4:
                     order.Append("4 ");
-                    var toppings4 = new HashSet<string>(pizzas[0].Toppings);
-                    order.Append($"{pizzas[0].Index} ");
-                    pizzas.RemoveAt(0);
 
-
-                    var firstQuarter = (int)Math.Floor(pizzas.Count / 4.0);
-                    toppings4.UnionWith(pizzas[firstQuarter].Toppings);
-                    order.Append($"{pizzas[firstQuarter].Index} ");
-                    pizzas.RemoveAt(firstQuarter);
-
-                    var thirdQuarter = 3 * ((int)Math.Floor(pizzas.Count / 4.0));
-                    toppings4.UnionWith(pizzas[thirdQuarter].Toppings);
-                    order.Append($"{pizzas[thirdQuarter].Index} ");
-                    pizzas.RemoveAt(thirdQuarter);
+                    var toppings4 = new HashSet<string>(pizzas[pizzas.Count - 1].Toppings);
+                    order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+                    pizzas.RemoveAt(pizzas.Count - 1);
 
                     toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
                     order.Append($"{pizzas[pizzas.Count - 1].Index} ");
                     pizzas.RemoveAt(pizzas.Count - 1);
 
-                    ////delete pizza
-                    //order.Append($"{pizzas[0].Index} ");
-                    //pizzas.RemoveAt(0);
-                    //toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+                    toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+                    order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+                    pizzas.RemoveAt(pizzas.Count - 1);
 
-                    //delete pizza
-                    //order.Append($"{pizzas[pizzas.Count - 1].Index} ");
-                    //pizzas.RemoveAt(pizzas.Count - 1);
+                    toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+                    order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+                    pizzas.RemoveAt(pizzas.Count - 1);
+
 
                     recievers[4] -= 4;
                     globalPoints += Math.Pow(toppings4.Count(), 2);
                     break;
             }
+
             orders.AppendLine(order.ToString());
         }
+
+
+
+        #region Test
+
+        //Take Range
+        //    var totalPeople = recievers[2] + recievers[3] + recievers[4];
+        //        if (totalPeople > pizzas.Count())
+        //        {
+        //            pizzas = pizzas.TakeLast(totalPeople).ToList();
+        //}
+
+        //public static void CreateOrder(int totalPizzas)
+        //{
+        //    var order = new StringBuilder();
+        //    switch (totalPizzas)
+        //    {
+        //        case 2:
+        //            order.Append("2 ");
+
+        //            var toppings2 = new HashSet<string>(pizzas[0].Toppings);
+        //            //delete pizza
+        //            order.Append($"{pizzas[0].Index} ");
+        //            pizzas.RemoveAt(0);
+
+        //            toppings2.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+        //            //delete pizza
+        //            order.Append($"{pizzas[pizzas.Count - 1].Index}");
+        //            pizzas.RemoveAt(pizzas.Count - 1);
+
+        //            recievers[2] -= 2;
+        //            globalPoints += Math.Pow(toppings2.Count(), 2);
+        //            break;
+
+        //        case 3:
+        //            order.Append("3 ");
+
+        //            var toppings3 = new HashSet<string>(pizzas[0].Toppings);
+        //            //delete pizza
+        //            order.Append($"{pizzas[0].Index} ");
+        //            pizzas.RemoveAt(0);
+
+        //            toppings3.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+        //            order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+        //            pizzas.RemoveAt(pizzas.Count - 1);
+
+        //            var middlePointer = (int)Math.Floor(pizzas.Count / 2.0);
+        //            toppings3.UnionWith(pizzas[middlePointer].Toppings);
+        //            //delete pizza
+        //            order.Append($"{pizzas[middlePointer].Index}");
+        //            pizzas.RemoveAt(middlePointer);
+
+        //            recievers[3] -= 3;
+        //            globalPoints += Math.Pow(toppings3.Count(), 2);
+        //            break;
+        //        case 4:
+        //            order.Append("4 ");
+        //            var toppings4 = new HashSet<string>(pizzas[0].Toppings);
+        //            order.Append($"{pizzas[0].Index} ");
+        //            pizzas.RemoveAt(0);
+
+
+        //            var firstQuarter = (int)Math.Floor(pizzas.Count / 4.0);
+        //            toppings4.UnionWith(pizzas[firstQuarter].Toppings);
+        //            order.Append($"{pizzas[firstQuarter].Index} ");
+        //            pizzas.RemoveAt(firstQuarter);
+
+        //            var thirdQuarter = 3 * ((int)Math.Floor(pizzas.Count / 4.0));
+        //            toppings4.UnionWith(pizzas[thirdQuarter].Toppings);
+        //            order.Append($"{pizzas[thirdQuarter].Index} ");
+        //            pizzas.RemoveAt(thirdQuarter);
+
+        //            toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+        //            order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+        //            pizzas.RemoveAt(pizzas.Count - 1);
+
+        //            ////delete pizza
+        //            //order.Append($"{pizzas[0].Index} ");
+        //            //pizzas.RemoveAt(0);
+        //            //toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+
+        //            //delete pizza
+        //            //order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+        //            //pizzas.RemoveAt(pizzas.Count - 1);
+
+        //            recievers[4] -= 4;
+        //            globalPoints += Math.Pow(toppings4.Count(), 2);
+        //            break;
+        //    }
+        //    orders.AppendLine(order.ToString());
+        //}
+
+
+
+        #endregion
     }
 }

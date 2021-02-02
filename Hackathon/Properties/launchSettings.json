@@ -2,7 +2,7 @@
   "profiles": {
     "Hackathon": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\CFBDev\\Hackathon\\d_many_pizzas.in d_many_pizzas.txt"
+      "commandLineArgs": "C:\\CFBDev\\Hackathon\\a_example.in a_example.txt"
     }
   }
 }
