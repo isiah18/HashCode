@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Hackathon
 {
@@ -11,12 +8,14 @@ namespace Hackathon
         public Pizza()
         { }
 
-        public Pizza(IEnumerable<string> toppings) : this()
+        public Pizza(IEnumerable<string> toppings, int index) : this()
         {
             Toppings = new HashSet<string>(toppings.ToList().OrderBy(s => s));
+            Index = index;
         }
 
-        public ISet<string> Toppings { get; set; }
+        public ISet<string> Toppings { get; }
+        public int Index { get; }
 
         public int TotalToppings => (int)Toppings?.Count();
     }
