@@ -58,6 +58,11 @@ namespace Hackathon
             }
 
             pizzas = pizzas.OrderBy(s => s.TotalToppings).ToList();
+
+
+            //TODO : check if total people > total pizzas 
+            //pizzas = pizzas.TakeLast(recievers[2] + recievers[3] + recievers[4]).ToList();
+
         }
 
         private static void ProcessOrders()
@@ -107,10 +112,12 @@ namespace Hackathon
             {
                 case 2:
                     order.Append("2 ");
+                   
                     var toppings2 = new HashSet<string>(pizzas[0].Toppings);
                     //delete pizza
                     order.Append($"{pizzas[0].Index} ");
                     pizzas.RemoveAt(0);
+
                     toppings2.UnionWith(pizzas[pizzas.Count - 1].Toppings);
                     //delete pizza
                     order.Append($"{pizzas[pizzas.Count - 1].Index}");
@@ -122,14 +129,13 @@ namespace Hackathon
 
                 case 3:
                     order.Append("3 ");
+                    
                     var toppings3 = new HashSet<string>(pizzas[0].Toppings);
-
                     //delete pizza
                     order.Append($"{pizzas[0].Index} ");
                     pizzas.RemoveAt(0);
-                    toppings3.UnionWith(pizzas[pizzas.Count - 1].Toppings);
 
-                    //delete pizza
+                    toppings3.UnionWith(pizzas[pizzas.Count - 1].Toppings);
                     order.Append($"{pizzas[pizzas.Count - 1].Index} ");
                     pizzas.RemoveAt(pizzas.Count - 1);
 
@@ -145,34 +151,32 @@ namespace Hackathon
                 case 4:
                     order.Append("4 ");
                     var toppings4 = new HashSet<string>(pizzas[0].Toppings);
-                    //delete pizza
                     order.Append($"{pizzas[0].Index} ");
                     pizzas.RemoveAt(0);
-                    toppings4.UnionWith(pizzas[0].Toppings);
+
 
                     var firstQuarter = (int)Math.Floor(pizzas.Count / 4.0);
+                    toppings4.UnionWith(pizzas[firstQuarter].Toppings);
                     order.Append($"{pizzas[firstQuarter].Index} ");
                     pizzas.RemoveAt(firstQuarter);
-                    toppings4.UnionWith(pizzas[firstQuarter].Toppings);
 
                     var thirdQuarter = 3 * ((int)Math.Floor(pizzas.Count / 4.0));
+                    toppings4.UnionWith(pizzas[thirdQuarter].Toppings);
                     order.Append($"{pizzas[thirdQuarter].Index} ");
                     pizzas.RemoveAt(thirdQuarter);
-                    toppings4.UnionWith(pizzas[thirdQuarter].Toppings);
+
+                    toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
+                    order.Append($"{pizzas[pizzas.Count - 1].Index} ");
+                    pizzas.RemoveAt(pizzas.Count - 1);
 
                     ////delete pizza
                     //order.Append($"{pizzas[0].Index} ");
                     //pizzas.RemoveAt(0);
                     //toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
 
-                    ////delete pizza
+                    //delete pizza
                     //order.Append($"{pizzas[pizzas.Count - 1].Index} ");
                     //pizzas.RemoveAt(pizzas.Count - 1);
-                    //toppings4.UnionWith(pizzas[pizzas.Count - 1].Toppings);
-
-                    //delete pizza
-                    order.Append($"{pizzas[pizzas.Count - 1].Index} ");
-                    pizzas.RemoveAt(pizzas.Count - 1);
 
                     recievers[4] -= 4;
                     globalPoints += Math.Pow(toppings4.Count(), 2);
